@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile Viewer</title>
+</head>
+<body>
+    <h1>Profile Viewer</h1>
+    <p id="login">
+        Your are not logged it
+        <button>Log in</button>
+    </p>
+    <p id="logout">
+        You are logged in as <span id="user"></span>
+        <button>Log out</button>
+    </p>
+    <p>
+        <label for="profile">Profile:</label>
+        <input id="profile">
+        <button id="view">View</button>
+    </p>
+    <p>
+        <button id="showFolders">Show Folders</button>
+    </p>
+    <p>
+        <button id="create">Create Folder</button>
+    </p>
+    <p>
+        <form>
+        <table>
+            <tr>
+                <td colspan="2">File Upload</td>
+            </tr>
+            <tr>
+                <th>Select File </th>
+                <td><input id="csv" name="csv" type="file" /></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input type="submit" value="submit"/>
+                </td>
+            </tr>
+        </table>
+        </form>
+    </p>
+    <p>
+        <button id="showFile">Show Turtle</button>
+    </p>
+    <dl id="viewer">
+        <dt>Full name</dt>
+        <dd id="fullName"></dd>
+        <dt>Friends</dt>
+        <dd>
+            <ul id="friends"></ul>
+        </dd>
+        <dt>Folders</dt>
+        <dd>
+            <ul id="folders"></ul>
+        </dd>
+        <dt>Images</dt>
+        <dd>
+            <ul id="images"></ul>
+        </dd>
+    </dl>
+
+    <style>
+    input[type="file"] {
+        background-color:#c0c0c0 !important;
+    }
+    </style>
+    <input id="targetFolder" placeholder="folder to hold uploads"><br>
+        <input type="file" id="fileArea" multiple>
+    <input type="button" value="upload" onclick="javascript:upload()">
+
+        <script>
+        function upload(){
+            const fileInput = document.getElementById('fileArea');
+            const files = fileInput.files;
+            var content = files[0];
+            console.log(content);
+
+            solid.auth.fetch('https://pstreich.solid.community/public/images/', {
+                method:'POST',
+                headers: {
+                    "Content-Type": "image/jpeg",
+                    "Content-Length": content.length,
+                    "Slug": "xxx",
+                },
+                body: content
+            }).then(resp => {
+                console.log(resp);
+            })
+
+                // SolidFileClient.uploadFile('https://pstreich.solid.community/public/images/', content).then( res=> {
+            //     console.log(res);
+            // }, err=>{console.log("upload error : "+err)});
+        }
+    </script>
+
+<script type="text/javascript" src="cordova.js"></script>
+<script type="text/javascript" src="js/solid_jquery.js"></script>
+<script type="text/javascript" src="js/solid-auth-client.bundle.js"></script>
+<script type="text/javascript" src="js/rdflib.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/solid-file-client/dist/browser/solid-file-client.bundle.js"></script>
+<script type="text/javascript" src="js/solid_main.js"></script>
+</body>
+</html>
